@@ -7,6 +7,7 @@ import static configuracion.ConectarDB.USER;
 import java.sql.*;
 import java.util.ArrayList;
 import PronosticosDeportivos.ResultadoEnum.Resultado;
+import excepciones.ExcepcionIntegridadDeDatos;
 
 public class Participante {
 
@@ -35,7 +36,7 @@ public class Participante {
 	// Lee la Base de datos de pronosticos. Crea los participantes y le asigna sus
 	// listas de pronosticos
 
-	public static void ArmarListaDeParticipantes(ArrayList<Partido> listaDePartidos) {
+	public static void ArmarListaDeParticipantes(ArrayList<Partido> listaDePartidos) throws ExcepcionIntegridadDeDatos {
 		participantes = new ArrayList<Participante>();
 
 		Connection conexion = null;
@@ -63,7 +64,7 @@ public class Participante {
 					}
 				}
 				if (estePartido == null) {
-					System.out.println("Error en pronostico registro numero: " + resultadoConsulta.getRow());
+					System.out.println("Error en pronostico registro numero: " + resultadoConsulta.getRow()+" -El Id de Partido es incorrecto");
 					hayErrores = true;
 					continue;
 				}
@@ -119,10 +120,7 @@ public class Participante {
 		}
 
 		if (hayErrores == true) {
-			System.out.println("----------------------------------------------------");
-			System.out.println("ATENCION: Corrija los errores y vuelva a intentar");
-			System.out.println("----------------------------------------------------");
-			System.exit(0);
+			throw new ExcepcionIntegridadDeDatos();
 		}
 
 	}
