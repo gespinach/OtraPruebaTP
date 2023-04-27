@@ -104,7 +104,7 @@ public class Puntuacion {
 			listaPuntajes.add(puntajes);
 		}
 
-		Collections.sort(listaPuntajes, (x, y) -> y[1].compareTo(x[1]));
+		Collections.sort(listaPuntajes, (x, y) -> Integer.parseInt(y[1])-(Integer.parseInt(x[1])));
 
 		return listaPuntajes;
 
